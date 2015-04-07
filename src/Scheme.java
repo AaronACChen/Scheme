@@ -132,6 +132,26 @@ public class Scheme {
 			text.setText("WOW, THIS IS A TERRIBLE PASSWORD SCHEME");
 			message.add(text);
 			frame.getContentPane().add(message);
+			
+			button = new JButton();
+			button.setText("RESTART");
+			frame.getContentPane().add(button);
+			button.addActionListener(new ActionListener() {
+	            public void actionPerformed(ActionEvent e)
+	            {	
+	            	p[0] = generatePicturePassword();
+	            	p[1] = generatePicturePassword();
+	            	p[2] = generatePicturePassword(); 
+	            	
+	            	try{
+	        			out = new PrintWriter(new BufferedWriter(new FileWriter("Log.txt", true)));
+	        		} catch (IOException f) {
+	        		    //exception handling left as an exercise for the reader
+	        		}
+	            	index = 0;
+	            	scheme.complete();
+	            }
+        	});
 		}
 		
 		frame.getContentPane().revalidate();

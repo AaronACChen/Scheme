@@ -139,6 +139,26 @@ public class SchemeControl {
 			text.setText("WOW, THIS IS A TERRIBLE PASSWORD SCHEME");
 			message.add(text);
 			frame.getContentPane().add(message);
+			
+			button = new JButton();
+			button.setText("RESTART");
+			frame.getContentPane().add(button);
+			button.addActionListener(new ActionListener() {
+	            public void actionPerformed(ActionEvent e)
+	            {	
+	            	p[0] = generatePassword();
+	            	p[1] = generatePassword();
+	            	p[2] = generatePassword(); 
+	            	
+	            	try{
+	        			out = new PrintWriter(new BufferedWriter(new FileWriter("LogControl.txt", true)));
+	        		} catch (IOException f) {
+	        		    //exception handling left as an exercise for the reader
+	        		}
+	            	index = 0;
+	            	scheme.complete();
+	            }
+        	});
 		}
 		
 		frame.getContentPane().revalidate();
