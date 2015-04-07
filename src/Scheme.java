@@ -57,7 +57,7 @@ public class Scheme {
 		if (index < 3){
 			
 			dis = new PictureDisplay(p[index]);
-			enter = new PictureEntry(p[index],p[index]);
+			enter = new PictureEntry(c,p[index]);
 			message = new JPanel();
 						
 			text = new JLabel(); 
