@@ -16,19 +16,34 @@ public class PictureEntry extends JPanel {
 	JPanel select;
 	JPanel entry;
 	
-	int currentEntry[] = new int[length];
-	int password[] = {0,1,2,3,4,3,2,1,0,2};
+	int currentEntry[] = {0,1,2,3,4,3,2,1,0,2};
+	int password[];
 	
 	
 	JLabel thumbs[] = new JLabel[length];
 	final Image[][] images = new Image[10][7];
+	Image empty;
 	
-	
-	public PictureEntry(){
+	Scheme scheme;
 		
-        
+	public PictureEntry(int i[],int p[]){
+		this(i,p,null);
+	}
+	
+	public PictureEntry(int i[],int p[],Scheme s){
+		scheme = s;
+		currentEntry = i.clone();
+		password = p;
+		
         ImageIcon icon; 
-        JLabel thumb;        
+        JLabel thumb; 
+        
+        try {
+			empty = ImageIO.read(new File("Empty.jpg"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
         
         for (int x = 1;x<=length;x++){
         	for (int y = 1;y<=choice;y++){
@@ -52,7 +67,11 @@ public class PictureEntry extends JPanel {
 
         
         for (int x = 0;x<length;x++){        	
-        	img = images[x][0].getScaledInstance(150, 150,  java.awt.Image.SCALE_SMOOTH);
+        	if (currentEntry[x] == -1){
+				img = empty.getScaledInstance(150, 150,  java.awt.Image.SCALE_SMOOTH);
+			} else {
+				img = images[x][currentEntry[x]].getScaledInstance(150, 150,  java.awt.Image.SCALE_SMOOTH);
+			}
         	
         	icon = new ImageIcon(img); 
         	thumbs[x] = new JLabel();
@@ -127,8 +146,11 @@ public class PictureEntry extends JPanel {
 		Icon icon;
 		for (int x = 0;x<length;x++){
 			System.out.print(currentEntry[x]);
-			
-			img = images[x][currentEntry[x]].getScaledInstance(150, 150,  java.awt.Image.SCALE_SMOOTH);
+			if (currentEntry[x] == -1){
+				img = empty.getScaledInstance(150, 150,  java.awt.Image.SCALE_SMOOTH);
+			} else {
+				img = images[x][currentEntry[x]].getScaledInstance(150, 150,  java.awt.Image.SCALE_SMOOTH);
+			}
 			icon = new ImageIcon(img); 
 			thumbs[x].setIcon(icon);
 		}
@@ -136,7 +158,7 @@ public class PictureEntry extends JPanel {
 		this.repaint();
 	}
 	
-	public void verify(){
+	public boolean verify(){
 		boolean correct;
 		
 		correct = true;
@@ -148,6 +170,8 @@ public class PictureEntry extends JPanel {
 		}
 		if (correct){
 			System.out.println("CORRECT PASSWORD WOW");
+			return correct;
 		}
+		return correct;
 	}
 }
